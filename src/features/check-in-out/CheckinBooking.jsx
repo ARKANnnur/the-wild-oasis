@@ -6,7 +6,7 @@ import Heading from '../../ui/Heading';
 import ButtonGroup from '../../ui/ButtonGroup';
 import Button from '../../ui/Button';
 import ButtonText from '../../ui/ButtonText';
-import CheckBox from '../../ui/CheckBox';
+import Checkbox from '../../ui/Checkbox';
 import Spinner from '../../ui/Spinner';
 
 import Row from '../../ui/Row';
@@ -48,18 +48,21 @@ function CheckinBooking() {
 
   const optionalBreakfast = settings.breakfastPrice * numNights * numGuests;
 
-  if (isLoading || isSettings) return <Spinner />; 
+  if (isLoading || isSettings) return <Spinner />;
 
   function handleCheckin() {
     if (!confirmPaid) return;
     if (addBreakfast) {
-      checkin({bookingId, breakfast: {
-        hasBreakfast: true,
-        extrasPrice: optionalBreakfast,
-        totalPrice: totalPrice + optionalBreakfast,
-      }});
+      checkin({
+        bookingId,
+        breakfast: {
+          hasBreakfast: true,
+          extrasPrice: optionalBreakfast,
+          totalPrice: totalPrice + optionalBreakfast,
+        },
+      });
     } else {
-      checkin({bookingId, breakfast: {}});
+      checkin({ bookingId, breakfast: {} });
     }
   }
 
@@ -73,7 +76,7 @@ function CheckinBooking() {
       <BookingDataBox booking={booking} />
       {!hasBreakfast && (
         <Box>
-          <CheckBox
+          <Checkbox
             checked={addBreakfast}
             disabled={addBreakfast}
             onChange={() => {
@@ -83,12 +86,12 @@ function CheckinBooking() {
             id="breakfast"
           >
             Want add breakfast for {formatCurrency(optionalBreakfast)}
-          </CheckBox>
+          </Checkbox>
         </Box>
       )}
 
       <Box>
-        <CheckBox
+        <Checkbox
           checked={confirmPaid}
           disabled={confirmPaid || isCheckin}
           onChange={() => setConfirmPaid((confirm) => !confirm)}
@@ -102,7 +105,7 @@ function CheckinBooking() {
               )} (${formatCurrency(totalPrice)} + ${formatCurrency(
                 optionalBreakfast
               )})`}
-        </CheckBox>
+        </Checkbox>
       </Box>
 
       <ButtonGroup>
