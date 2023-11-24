@@ -6,7 +6,7 @@ export async function getBookings({ filter, sortBy, page }) {
   let query = supabase
     .from('bookings')
     .select(
-      'id, created_at, startDate, endDate, numNights, numGuests, totalPrice, status, cabins(name), guests(fullName,email)',
+      'id, created_at, startDate, endDate, numNights, numGuests, cabinPrice, totalPrice, status, isPaid, observations, cabins(id,name), guests(id,fullName,email), extrasPrice, hasBreakfast',
       { count: 'exact' }
     );
   // .eq('status', 'unconfirmed')
@@ -51,6 +51,25 @@ export async function getBooking(id) {
   if (error) {
     console.error(error);
     throw new Error('Booking not found');
+  }
+
+  return data;
+}
+
+export async function createEditBooking(newBooking,id) {
+  let query = supabase.from('bookings');
+
+  //Create
+  if (!id) query = query.insert([{ ...newBooking }]);
+
+  //Edit
+  if (id) query = query.update({ ...newBooking }).eq('id', id);
+
+  const { data, error } = await query.select().single();
+
+  if (error) {
+    console.error(error);
+    throw new Error('bookings could not be created');
   }
 
   return data;

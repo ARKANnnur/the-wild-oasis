@@ -1,4 +1,4 @@
-import { formatDistance, parseISO } from 'date-fns';
+import { format, formatDistance, parseISO } from 'date-fns';
 import { differenceInDays } from 'date-fns/esm';
 
 // We want to make this function work for both Date objects and strings (which come from Supabase)
@@ -42,3 +42,8 @@ export const formatCurrency = (value) =>
   new Intl.NumberFormat('en', { style: 'currency', currency: 'USD' }).format(
     value
   );
+
+export const formatDateToNumber = (dateString) => {
+  const formattedDate = format(dateString, 'yyyyMMdd'); // Format menjadi 'YYYYMMDD'
+  return Number(formattedDate);
+};
