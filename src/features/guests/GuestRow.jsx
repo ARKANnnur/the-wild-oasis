@@ -67,7 +67,7 @@ function GuestRow({ guest }) {
 
         <Modal.Window name="delete">
           <ConfirmDelete
-            resource={`booking ${guest.fullName}`}
+            resource={`Guests ${guest.fullName}`}
             onConfirm={() => deleteGuest(guest.id)}
             disabled={isDeleting}
           />
